@@ -1,0 +1,14 @@
+:root {
+  --main-color: #385eca;
+  --background-color: #ffffff;
+  --correct-color: #3c3180;
+  --wrong-color: #f2ce83;
+}
+
+.container {
+  display: flexbox;
+  height: 100vh;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--background-color);
+}

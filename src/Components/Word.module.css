@@ -1,0 +1,20 @@
+.word {
+    margin-right: 15px;
+    font-size: 28px;
+    line-height: 35px;
+    color: var(--main-color);
+    border: 3px solid transparent;
+}
+
+.wrongWord {
+    border-bottom: 3px solid var(--wrong-color);
+}
+
+
+.correct {
+    color: var(--correct-color);
+}
+
+.wrong {
+    color: var(--wrong-color);
+}

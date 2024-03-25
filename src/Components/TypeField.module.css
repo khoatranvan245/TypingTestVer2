@@ -1,0 +1,25 @@
+.typeField {
+    display: flex;
+    width: 80%;
+    height: 120px;
+    overflow: hidden;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    top: 0px;
+}
+
+.typeField p {
+    display: flex;
+    flex-wrap: wrap;
+    position: absolute;
+    top: 0px;
+}
+
+.correct {
+    color: var(--correct-color);
+}
+
+.wrong {
+    color: var(--wrong-color);
+}

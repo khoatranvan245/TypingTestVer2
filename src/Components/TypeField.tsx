@@ -1,8 +1,9 @@
+import { ReactNode } from 'react'
 import { vocabularyList } from '../vocabularyList'
 import styles from './TypeField.module.css'
 import Word from './Word'
 
-const TypeField = () => {
+const TypeField = ({children}: {children: ReactNode}) => {
 
 
   return (
@@ -18,6 +19,7 @@ const TypeField = () => {
           )
         })}
       </p>
+      {children}
     </div>
   )
 }

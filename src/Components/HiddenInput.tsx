@@ -31,7 +31,7 @@ const HiddenInput = () => {
         ref={inputRef}
         type="text"
         value={input}
-        onChange={(e) => handleInputChange(e.target.value)}
+        onInput={(e) => handleInputChange(e.currentTarget.value)}
       />
     </>
   )

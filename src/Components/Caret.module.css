@@ -1,0 +1,21 @@
+.caret {
+    width: 0px;
+    height: 35px;
+    border-left: 3px solid var(--wrong-color);
+    position: absolute;
+    transition: left 0.2s ease;
+}
+
+.animation {
+    animation: caretAnimation 0.7s ease-in infinite alternate;
+}
+
+@keyframes caretAnimation {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}

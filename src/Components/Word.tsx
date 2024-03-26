@@ -1,18 +1,21 @@
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { StringToChar } from '../Utils/StringToChar'
 import styles from './Word.module.css'
 import { RootState } from '../State/Store'
 import { useEffect, useState } from 'react'
+import { updateCaretPosition } from '../State/Slices/caretPositionSlice'
 type WordType = {
   word: string
   wordIndex: number
 }
 
 const Word = ({ word, wordIndex }: WordType) => {
-  const input = useSelector((state: RootState) => state.input.value)
+  const input: string = useSelector((state: RootState) => state.input.value)
   const currentWordIndex = useSelector((state: RootState) => state.currentWordIndex.value)
 
-  const [correctLetterCounter, setCorrectLetterCounter] = useState(0)
+  const [wordInput, setWordInput] = useState('')
+
+  const dispatch = useDispatch()
 
   useEffect(() => {
     if (currentWordIndex === wordIndex) {
@@ -23,20 +26,46 @@ const Word = ({ word, wordIndex }: WordType) => {
       }
 
       for (let i = 0; i < input.length; i++) {
+        const currentLetter: HTMLElement = document.querySelector(`.word${wordIndex}letter${i}`)!
+
         if (input[i] === word[i]) {
-          document.querySelector(`.word${wordIndex}letter${i}`)?.classList.add(styles.correct)
-          setCorrectLetterCounter(correctLetterCounter + 1)
+          currentLetter?.classList.add(styles.correct)
         } else {
-          document.querySelector(`.word${wordIndex}letter${i}`)?.classList.add(styles.wrong)
-          setCorrectLetterCounter(correctLetterCounter - 1)
+          currentLetter?.classList.add(styles.wrong)
         }
       }
+
+      if (input == '') {
+        const currentWord: HTMLElement = document.querySelector(`.word${currentWordIndex}`)!
+        dispatch(
+          updateCaretPosition({
+            top: currentWord.offsetTop,
+            left: currentWord.offsetLeft,
+          })
+        )
+      } else {
+        const lattestLetter: HTMLElement = document.querySelector(
+          `.word${wordIndex}letter${input.length - 1}`
+        )!
+        dispatch(
+          updateCaretPosition({
+            top: lattestLetter.offsetTop,
+            left: lattestLetter.offsetLeft + lattestLetter.offsetWidth,
+          })
+        )
+      }
+
+      setWordInput(input)
+    }
+
+    if (currentWordIndex > wordIndex) {
+      if (wordInput !== word)
+        document.querySelector(`.word${wordIndex}`)?.classList.add(styles.wrongWord)
+      console.log(wordInput)
     }
   }, [input])
 
-  if (currentWordIndex > wordIndex && correctLetterCounter < word.length) {
-    document.querySelector(`.word${wordIndex}`)?.classList.add(styles.wrongWord)
-  }
+  
 
   const letterList = StringToChar(word)
 

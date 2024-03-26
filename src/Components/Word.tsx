@@ -49,7 +49,7 @@ const Word = ({ word, wordIndex }: WordType) => {
         )!
         dispatch(
           updateCaretPosition({
-            top: lattestLetter.offsetTop,
+            top: lattestLetter.offsetTop - 3,
             left: lattestLetter.offsetLeft + lattestLetter.offsetWidth,
           })
         )
@@ -64,8 +64,6 @@ const Word = ({ word, wordIndex }: WordType) => {
       console.log(wordInput)
     }
   }, [input])
-
-  
 
   const letterList = StringToChar(word)
 

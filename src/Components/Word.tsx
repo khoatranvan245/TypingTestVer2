@@ -18,6 +18,8 @@ const Word = ({ word, wordIndex }: WordType) => {
 
   const dispatch = useDispatch()
 
+  if (input.length > currentWord.length && currentWordIndex === wordIndex) setCurrentWord(input)
+
   useEffect(() => {
     if (currentWordIndex === wordIndex) {
       for (let i = 0; i < currentWord.length; i++) {
@@ -50,7 +52,7 @@ const Word = ({ word, wordIndex }: WordType) => {
         )!
         dispatch(
           updateCaretPosition({
-            top: lattestLetter.offsetTop - 3,
+            top: lattestLetter.offsetTop,
             left: lattestLetter.offsetLeft + lattestLetter.offsetWidth,
           })
         )
@@ -58,7 +60,7 @@ const Word = ({ word, wordIndex }: WordType) => {
 
       setWordInput(input)
     }
-  }, [input])
+  }, [input, currentWordIndex, currentWord])
 
   useEffect(() => {
     if (currentWordIndex > wordIndex) {

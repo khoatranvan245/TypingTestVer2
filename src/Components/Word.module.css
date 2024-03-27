@@ -1,18 +1,21 @@
 .word {
+    display: inline-block;
     margin-right: 15px;
-    font-size: 28px;
-    line-height: 35px;
+    font-size: 30px;
+    line-height: 1;
+    height: 40px;
     color: var(--main-color);
-    border-bottom: 3px solid transparent;
-    border-top: 3px solid transparent;
 }
 
 .word span {
+    display: inline-block;
     height: 100%;
+    line-height: 1;
 }
 
-.wrongWord {
-    border-bottom: 3px solid var(--wrong-color);
+.wrongWord span {
+    text-decoration: underline;
+    text-decoration-color: var(--wrong-color);
 }
 
 

@@ -1,4 +1,4 @@
-import { ReactNode, useEffect, useRef } from 'react'
+import { ReactNode, useEffect, useRef, useState } from 'react'
 import { vocabularyList } from '../vocabularyList'
 import styles from './TypeField.module.css'
 import Word from './Word'
@@ -8,15 +8,20 @@ import { updateCaretPosition } from '../State/Slices/caretPositionSlice'
 
 const TypeField = ({ children }: { children: ReactNode }) => {
   const typeRef = useRef<HTMLDivElement>(null)
+
   const currentWordIndex = useSelector((state: RootState) => state.currentWordIndex.value)
   const dispatch = useDispatch()
 
-  const caretBottomPosition = useSelector((state: RootState) => state.caretPosition.top) + 35
+  const caretHeight = 30
+  const caretBottomPosition =
+    useSelector((state: RootState) => state.caretPosition.top) + caretHeight
+
+  const [scrollTime, setScrollTime] = useState(1)
 
   useEffect(() => {
-    if (caretBottomPosition == 115) {
+    if (caretBottomPosition > 70 + scrollTime * 30) {
       if (typeRef.current) {
-        typeRef.current.style.top = '-35px'
+        typeRef.current.style.top = -40 * scrollTime + 'px'
 
         const currentWord: HTMLElement = document.querySelector(`.word${currentWordIndex}`)!
         dispatch(
@@ -25,8 +30,11 @@ const TypeField = ({ children }: { children: ReactNode }) => {
             left: currentWord.offsetLeft,
           })
         )
+
+        setScrollTime(scrollTime + 1)
       }
     }
+    console.log(caretBottomPosition)
   }, [caretBottomPosition])
 
   return (
@@ -43,7 +51,6 @@ const TypeField = ({ children }: { children: ReactNode }) => {
         })}
         {children}
       </p>
-      
     </div>
   )
 }

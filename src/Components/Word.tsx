@@ -13,13 +13,14 @@ const Word = ({ word, wordIndex }: WordType) => {
   const input: string = useSelector((state: RootState) => state.input.value)
   const currentWordIndex = useSelector((state: RootState) => state.currentWordIndex.value)
 
+  const [currentWord, setCurrentWord] = useState(word)
   const [wordInput, setWordInput] = useState('')
 
   const dispatch = useDispatch()
 
   useEffect(() => {
     if (currentWordIndex === wordIndex) {
-      for (let i = 0; i < word.length; i++) {
+      for (let i = 0; i < currentWord.length; i++) {
         document
           .querySelector(`.word${wordIndex}letter${i}`)
           ?.classList.remove(styles.correct, styles.wrong)
@@ -28,7 +29,7 @@ const Word = ({ word, wordIndex }: WordType) => {
       for (let i = 0; i < input.length; i++) {
         const currentLetter: HTMLElement = document.querySelector(`.word${wordIndex}letter${i}`)!
 
-        if (input[i] === word[i]) {
+        if (input[i] === currentWord[i]) {
           currentLetter?.classList.add(styles.correct)
         } else {
           currentLetter?.classList.add(styles.wrong)
@@ -57,15 +58,16 @@ const Word = ({ word, wordIndex }: WordType) => {
 
       setWordInput(input)
     }
-
-    if (currentWordIndex > wordIndex) {
-      if (wordInput !== word)
-        document.querySelector(`.word${wordIndex}`)?.classList.add(styles.wrongWord)
-      console.log(wordInput)
-    }
   }, [input])
 
-  const letterList = StringToChar(word)
+  useEffect(() => {
+    if (currentWordIndex > wordIndex) {
+      if (wordInput !== currentWord)
+        document.querySelector(`.word${wordIndex}`)?.classList.add(styles.wrongWord)
+    }
+  }, [currentWordIndex])
+
+  const letterList = StringToChar(currentWord)
 
   return (
     <span className={[styles.word, `word${wordIndex}`].join(' ')}>

@@ -15,6 +15,8 @@ const Caret = () => {
     }
   }, [caretPosition])
 
+  console.log()
+
   return (
     <div
       className={styles.caret}

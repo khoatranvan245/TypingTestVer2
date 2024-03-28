@@ -5,12 +5,15 @@ import Word from './Word'
 import { useDispatch, useSelector } from 'react-redux'
 import { RootState } from '../State/Store'
 import { updateCaretPosition } from '../State/Slices/caretPositionSlice'
+import { shuffle } from '../Utils/ShuffleArray'
 
 const TypeField = ({ children }: { children: ReactNode }) => {
   const typeRef = useRef<HTMLDivElement>(null)
 
   const currentWordIndex = useSelector((state: RootState) => state.currentWordIndex.value)
   const dispatch = useDispatch()
+
+  const [paragraph, setParagraph] = useState<string[]>([])
 
   const caretHeight = 30
   const caretBottomPosition =
@@ -34,13 +37,16 @@ const TypeField = ({ children }: { children: ReactNode }) => {
         setScrollTime(scrollTime + 1)
       }
     }
-    console.log(caretBottomPosition)
   }, [caretBottomPosition])
+
+  useEffect(() => {
+    setParagraph(shuffle(vocabularyList))
+  }, [])
 
   return (
     <div className={styles.typeField}>
       <p ref={typeRef}>
-        {vocabularyList.map((word: string, index: number) => {
+        {paragraph.map((word: string, index: number) => {
           return (
             <Word
               wordIndex={index}

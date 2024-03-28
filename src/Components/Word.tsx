@@ -13,15 +13,21 @@ const Word = ({ word, wordIndex }: WordType) => {
   const input: string = useSelector((state: RootState) => state.input.value)
   const currentWordIndex = useSelector((state: RootState) => state.currentWordIndex.value)
 
-  const [currentWord, setCurrentWord] = useState(word)
+  const [currentWord, setCurrentWord] = useState('')
   const [wordInput, setWordInput] = useState('')
 
   const dispatch = useDispatch()
 
-  if (input.length > currentWord.length && currentWordIndex === wordIndex) setCurrentWord(input)
+  useEffect(() => {
+    if (currentWordIndex == wordIndex && input.length > word.length) {
+      for (let i = word.length; i < input.length; i++) setCurrentWord(currentWord + input[i])
+    } else setCurrentWord(word)
+  }, [input])
 
   useEffect(() => {
     if (currentWordIndex === wordIndex) {
+      setWordInput(input)
+
       for (let i = 0; i < currentWord.length; i++) {
         document
           .querySelector(`.word${wordIndex}letter${i}`)
@@ -31,41 +37,38 @@ const Word = ({ word, wordIndex }: WordType) => {
       for (let i = 0; i < input.length; i++) {
         const currentLetter: HTMLElement = document.querySelector(`.word${wordIndex}letter${i}`)!
 
-        if (input[i] === currentWord[i]) {
+        if (input[i] === word[i]) {
           currentLetter?.classList.add(styles.correct)
         } else {
           currentLetter?.classList.add(styles.wrong)
         }
       }
 
-      if (input == '') {
-        const currentWord: HTMLElement = document.querySelector(`.word${currentWordIndex}`)!
-        dispatch(
-          updateCaretPosition({
-            top: currentWord.offsetTop,
-            left: currentWord.offsetLeft,
-          })
-        )
-      } else {
-        const lattestLetter: HTMLElement = document.querySelector(
-          `.word${wordIndex}letter${input.length - 1}`
-        )!
-        dispatch(
-          updateCaretPosition({
-            top: lattestLetter.offsetTop,
-            left: lattestLetter.offsetLeft + lattestLetter.offsetWidth,
-          })
-        )
-      }
-
-      setWordInput(input)
+      // if (input == '') {
+      //   const currentWord: HTMLElement = document.querySelector(`.word${currentWordIndex}`)!
+      //   dispatch(
+      //     updateCaretPosition({
+      //       top: currentWord.offsetTop,
+      //       left: currentWord.offsetLeft,
+      //     })
+      //   )
+      // } else {
+      //   const lattestLetter: HTMLElement = document.querySelector(
+      //     `.word${wordIndex}letter${input.length - 1}`
+      //   )!
+      //   dispatch(
+      //     updateCaretPosition({
+      //       top: lattestLetter.offsetTop,
+      //       left: lattestLetter.offsetLeft + lattestLetter.offsetWidth,
+      //     })
+      //   )
+      // }
     }
   }, [input, currentWordIndex, currentWord])
 
   useEffect(() => {
-    if (currentWordIndex > wordIndex) {
-      if (wordInput !== currentWord)
-        document.querySelector(`.word${wordIndex}`)?.classList.add(styles.wrongWord)
+    if (currentWordIndex > wordIndex && wordInput !== word) {
+      document.querySelector(`.word${wordIndex}`)?.classList.add(styles.wrongWord)
     }
   }, [currentWordIndex])
 

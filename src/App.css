@@ -1,7 +1,7 @@
 :root {
   --main-color: #2aa198;
   --background-color: #fdf6e3;
-  --correct-color: #848178;
+  --correct-color: black;
   --wrong-color: #db5d95;
 }
 

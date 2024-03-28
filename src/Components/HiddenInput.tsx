@@ -3,7 +3,6 @@ import { updateInput } from '../State/Slices/inputSlice'
 import { useEffect, useRef } from 'react'
 import { RootState } from '../State/Store'
 import { updateWordIndex } from '../State/Slices/currentWordIndexSlice'
-import { resetCorrectLetters } from '../State/Slices/correctLettersSlice'
 
 const HiddenInput = () => {
   const input = useSelector((state: RootState) => state.input.value)
@@ -18,7 +17,6 @@ const HiddenInput = () => {
     if (inputValue.includes(' ')) {
       dispatch(updateWordIndex())
       dispatch(updateInput(''))
-      dispatch(resetCorrectLetters())
     } else {
       dispatch(updateInput(inputValue))
     }

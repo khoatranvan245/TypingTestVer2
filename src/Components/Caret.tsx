@@ -18,10 +18,10 @@ const Caret = () => {
   console.log()
 
   return (
-    <div
+    <span
       className={styles.caret}
       ref={caretRef}
-    ></div>
+    ></span>
   )
 }
 

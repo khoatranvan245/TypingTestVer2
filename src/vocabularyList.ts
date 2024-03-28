@@ -158,7 +158,6 @@ export const vocabularyList = [
   'everyone',
   'everybody',
   'everything',
-  'no one',
   'nobody',
   'nothing',
   'many',

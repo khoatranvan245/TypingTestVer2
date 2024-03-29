@@ -2,10 +2,12 @@ import { useDispatch, useSelector } from 'react-redux'
 import { updateInput } from '../State/Slices/inputSlice'
 import { useEffect, useRef } from 'react'
 import { RootState } from '../State/Store'
-import { updateWordIndex } from '../State/Slices/currentWordIndexSlice'
+import { decreaseWordIndex, increaseWordIndex } from '../State/Slices/currentWordIndexSlice'
+import { removeWrongWordInput } from '../State/Slices/wrongWordInputSlice'
 
 const HiddenInput = () => {
   const input = useSelector((state: RootState) => state.input.value)
+  const wrongWordInput = useSelector((state: RootState) => state.wrongWordInput.value)
   const dispatch = useDispatch()
 
   const inputRef = useRef<HTMLInputElement>(null)
@@ -15,12 +17,24 @@ const HiddenInput = () => {
 
   const handleInputChange = (inputValue: string) => {
     if (inputValue.includes(' ')) {
-      dispatch(updateWordIndex())
+      dispatch(increaseWordIndex())
       dispatch(updateInput(''))
     } else {
       dispatch(updateInput(inputValue))
     }
   }
+
+  const handleBackSpace = (keyPress: string) => {
+    if (keyPress === 'Backspace' && input === '') {
+      if (wrongWordInput.length > 0) {
+        dispatch(decreaseWordIndex())
+        dispatch(updateInput(wrongWordInput[wrongWordInput.length - 1]))
+        dispatch(removeWrongWordInput())
+      }
+    }
+  }
+
+  console.log(wrongWordInput)
 
   return (
     <>
@@ -30,6 +44,7 @@ const HiddenInput = () => {
         type="text"
         value={input}
         onInput={(e) => handleInputChange(e.currentTarget.value)}
+        onKeyDown={(e) => handleBackSpace(e.key)}
       />
     </>
   )

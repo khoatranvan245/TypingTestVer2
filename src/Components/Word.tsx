@@ -4,6 +4,7 @@ import styles from './Word.module.css'
 import { RootState } from '../State/Store'
 import { useEffect, useState } from 'react'
 import { updateCaretPosition } from '../State/Slices/caretPositionSlice'
+import { addWrongWordInput, resetWrongWordInput } from '../State/Slices/wrongWordInputSlice'
 type WordType = {
   word: string
   wordIndex: number
@@ -26,7 +27,7 @@ const Word = ({ word, wordIndex }: WordType) => {
       }
       setCurrentWord(word + extraLetters)
     }
-  }, [input])
+  }, [input, currentWordIndex])
 
   useEffect(() => {
     if (currentWordIndex === wordIndex) {
@@ -73,8 +74,15 @@ const Word = ({ word, wordIndex }: WordType) => {
   }, [input, currentWordIndex, currentWord])
 
   useEffect(() => {
-    if (currentWordIndex == wordIndex + 1 && wordInput !== word) {
-      document.querySelector(`.word${wordIndex}`)?.classList.add(styles.wrongWord)
+    if (currentWordIndex == wordIndex) {
+      document.querySelector(`.word${wordIndex}`)?.classList.remove(styles.wrongWord)
+    }
+    if (currentWordIndex == wordIndex + 1) {
+      if (wordInput !== word) {
+        document.querySelector(`.word${wordIndex}`)?.classList.add(styles.wrongWord)
+        dispatch(addWrongWordInput(wordInput))
+      }
+      else dispatch(resetWrongWordInput())
     }
   }, [currentWordIndex])
 

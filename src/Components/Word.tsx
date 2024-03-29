@@ -13,20 +13,46 @@ const Word = ({ word, wordIndex }: WordType) => {
   const input: string = useSelector((state: RootState) => state.input.value)
   const currentWordIndex = useSelector((state: RootState) => state.currentWordIndex.value)
 
-  const [currentWord, setCurrentWord] = useState('')
+  const [currentWord, setCurrentWord] = useState(word)
   const [wordInput, setWordInput] = useState('')
 
   const dispatch = useDispatch()
 
   useEffect(() => {
-    if (currentWordIndex == wordIndex && input.length > word.length) {
-      for (let i = word.length; i < input.length; i++) setCurrentWord(currentWord + input[i])
-    } else setCurrentWord(word)
+    if (currentWordIndex == wordIndex && input.length >= word.length) {
+      let extraLetters = ''
+      for (let i = word.length; i < input.length; i++) {
+        extraLetters += input[i]
+      }
+      setCurrentWord(word + extraLetters)
+    }
   }, [input])
 
   useEffect(() => {
     if (currentWordIndex === wordIndex) {
       setWordInput(input)
+
+      if (input == '') {
+        const currentWord: HTMLElement = document.querySelector(`.word${currentWordIndex}`)!
+        dispatch(
+          updateCaretPosition({
+            top: currentWord.offsetTop,
+            left: currentWord.offsetLeft,
+          })
+        )
+      } else {
+        if (document.querySelector(`.word${wordIndex}letter${input.length - 1}`)) {
+          const lattestLetter: HTMLElement = document.querySelector(
+            `.word${wordIndex}letter${input.length - 1}`
+          )!
+          dispatch(
+            updateCaretPosition({
+              top: lattestLetter.offsetTop,
+              left: lattestLetter.offsetLeft + lattestLetter.offsetWidth,
+            })
+          )
+        }
+      }
 
       for (let i = 0; i < currentWord.length; i++) {
         document
@@ -43,31 +69,11 @@ const Word = ({ word, wordIndex }: WordType) => {
           currentLetter?.classList.add(styles.wrong)
         }
       }
-
-      // if (input == '') {
-      //   const currentWord: HTMLElement = document.querySelector(`.word${currentWordIndex}`)!
-      //   dispatch(
-      //     updateCaretPosition({
-      //       top: currentWord.offsetTop,
-      //       left: currentWord.offsetLeft,
-      //     })
-      //   )
-      // } else {
-      //   const lattestLetter: HTMLElement = document.querySelector(
-      //     `.word${wordIndex}letter${input.length - 1}`
-      //   )!
-      //   dispatch(
-      //     updateCaretPosition({
-      //       top: lattestLetter.offsetTop,
-      //       left: lattestLetter.offsetLeft + lattestLetter.offsetWidth,
-      //     })
-      //   )
-      // }
     }
   }, [input, currentWordIndex, currentWord])
 
   useEffect(() => {
-    if (currentWordIndex > wordIndex && wordInput !== word) {
+    if (currentWordIndex == wordIndex + 1 && wordInput !== word) {
       document.querySelector(`.word${wordIndex}`)?.classList.add(styles.wrongWord)
     }
   }, [currentWordIndex])

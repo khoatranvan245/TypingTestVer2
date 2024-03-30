@@ -1,19 +1,20 @@
 import { ReactNode, useEffect, useRef, useState } from 'react'
-import { vocabularyList } from '../vocabularyList'
 import styles from './TypeField.module.css'
 import Word from './Word'
 import { useDispatch, useSelector } from 'react-redux'
 import { RootState } from '../State/Store'
 import { updateCaretPosition } from '../State/Slices/caretPositionSlice'
-import { shuffle } from '../Utils/ShuffleArray'
 
-const TypeField = ({ children }: { children: ReactNode }) => {
+type TypeFieldType = {
+  children: ReactNode
+  paragraph: string[]
+}
+
+const TypeField = ({ children, paragraph }: TypeFieldType) => {
   const typeRef = useRef<HTMLDivElement>(null)
 
   const currentWordIndex = useSelector((state: RootState) => state.currentWordIndex.value)
   const dispatch = useDispatch()
-
-  const [paragraph, setParagraph] = useState<string[]>([])
 
   const caretHeight = 30
   const caretBottomPosition =
@@ -39,9 +40,7 @@ const TypeField = ({ children }: { children: ReactNode }) => {
     }
   }, [caretBottomPosition])
 
-  useEffect(() => {
-    setParagraph(shuffle(vocabularyList))
-  }, [])
+  useEffect(() => {}, [])
 
   return (
     <div className={styles.typeField}>
@@ -49,6 +48,7 @@ const TypeField = ({ children }: { children: ReactNode }) => {
         {paragraph.map((word: string, index: number) => {
           return (
             <Word
+              paragraph={paragraph}
               wordIndex={index}
               key={index}
               word={word}

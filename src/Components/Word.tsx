@@ -8,9 +8,10 @@ import { addWrongWordInput, resetWrongWordInput } from '../State/Slices/wrongWor
 type WordType = {
   word: string
   wordIndex: number
+  paragraph: string[]
 }
 
-const Word = ({ word, wordIndex }: WordType) => {
+const Word = ({ word, wordIndex, paragraph }: WordType) => {
   const input: string = useSelector((state: RootState) => state.input.value)
   const currentWordIndex = useSelector((state: RootState) => state.currentWordIndex.value)
 
@@ -76,15 +77,27 @@ const Word = ({ word, wordIndex }: WordType) => {
   useEffect(() => {
     if (currentWordIndex == wordIndex) {
       document.querySelector(`.word${wordIndex}`)?.classList.remove(styles.wrongWord)
+      setCurrentWord(word)
     }
     if (currentWordIndex == wordIndex + 1) {
       if (wordInput !== word) {
         document.querySelector(`.word${wordIndex}`)?.classList.add(styles.wrongWord)
-        dispatch(addWrongWordInput(wordInput))
-      }
-      else dispatch(resetWrongWordInput())
+        dispatch(addWrongWordInput(wordInput + ' '))
+        console.log(wordInput)
+      } else dispatch(resetWrongWordInput())
     }
   }, [currentWordIndex])
+
+  useEffect(() => {
+    for (let i = 0; i < currentWord.length; i++) {
+      document
+        .querySelector(`.word${wordIndex}letter${i}`)
+        ?.classList.remove(styles.correct, styles.wrong)
+    }
+    setCurrentWord(word)
+    setWordInput('')
+    document.querySelector(`.word${wordIndex}`)?.classList.remove(styles.wrongWord)
+  }, [paragraph])
 
   const letterList = StringToChar(currentWord)
 

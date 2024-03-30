@@ -17,9 +17,12 @@ const currentWordIndexSlice = createSlice({
     },
     decreaseWordIndex: (state) => {
       state.value -= 1
+    },
+    resetWordIndex: (state) => {
+      state.value = 0
     }
   },
 })
 
-export const {increaseWordIndex, decreaseWordIndex} = currentWordIndexSlice.actions
+export const {increaseWordIndex, decreaseWordIndex, resetWordIndex} = currentWordIndexSlice.actions
 export default currentWordIndexSlice.reducer

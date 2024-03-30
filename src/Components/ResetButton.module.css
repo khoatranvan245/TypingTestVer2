@@ -1,0 +1,10 @@
+.resetButton {
+    margin-top: 20px;
+    background: none;
+    border: none;
+}
+
+.resetButton i {
+    font-size: 20px;
+    color: var(--main-color)
+}

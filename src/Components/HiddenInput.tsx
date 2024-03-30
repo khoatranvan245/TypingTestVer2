@@ -16,7 +16,7 @@ const HiddenInput = () => {
   }, [])
 
   const handleInputChange = (inputValue: string) => {
-    if (inputValue.includes(' ')) {
+    if (inputValue.includes(' ') && inputValue[0] !== '') {
       dispatch(increaseWordIndex())
       dispatch(updateInput(''))
     } else {

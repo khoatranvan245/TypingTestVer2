@@ -23,3 +23,17 @@
 .wrong {
     color: var(--wrong-color);
 }
+
+.blink {
+    animation: blinkAnimation 1s ease;
+}
+
+@keyframes blinkAnimation {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1
+    }
+}

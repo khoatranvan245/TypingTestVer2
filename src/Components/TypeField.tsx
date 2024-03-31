@@ -38,9 +38,17 @@ const TypeField = ({ children, paragraph }: TypeFieldType) => {
         setScrollTime(scrollTime + 1)
       }
     }
-  }, [caretBottomPosition])
+  }, [caretBottomPosition, paragraph])
 
-  useEffect(() => {}, [])
+  useEffect(() => {
+    setScrollTime(1)
+    typeRef.current!.style.top = 0 + 'px'
+  }, [paragraph])
+
+  useEffect(() => {
+    document.querySelector(`.${styles.typeField}`)?.classList.remove(styles.blink)
+    document.querySelector(`.${styles.typeField}`)?.classList.add(styles.blink)
+  }, [paragraph])
 
   return (
     <div className={styles.typeField}>

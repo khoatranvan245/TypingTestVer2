@@ -21,10 +21,12 @@ const Word = ({ word, wordIndex, paragraph }: WordType) => {
   const dispatch = useDispatch()
 
   useEffect(() => {
-    if (currentWordIndex == wordIndex && input.length >= word.length) {
+    if (currentWordIndex == wordIndex) {
       let extraLetters = ''
-      for (let i = word.length; i < input.length; i++) {
-        extraLetters += input[i]
+      if (input.length >= word.length) {
+        for (let i = word.length; i < input.length; i++) {
+          extraLetters += input[i]
+        }
       }
       setCurrentWord(word + extraLetters)
     }
@@ -83,7 +85,6 @@ const Word = ({ word, wordIndex, paragraph }: WordType) => {
       if (wordInput !== word) {
         document.querySelector(`.word${wordIndex}`)?.classList.add(styles.wrongWord)
         dispatch(addWrongWordInput(wordInput + ' '))
-        console.log(wordInput)
       } else dispatch(resetWrongWordInput())
     }
   }, [currentWordIndex])

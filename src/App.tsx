@@ -1,26 +1,20 @@
-import { useEffect, useState } from 'react'
-import './App.css'
-import Caret from './Components/Caret'
-import HiddenInput from './Components/HiddenInput'
-import ResetButton from './Components/ResetButton'
-import TypeField from './Components/TypeField'
-import { shuffle } from './Utils/ShuffleArray'
-import { vocabularyList } from './vocabularyList'
+import HomePage from './Pages/HomePage'
+import ResultPage from './Pages/ResultPage'
+import { createContext, useState } from 'react'
+
+type gameStateType = 'not-started' | 'start' | 'end'
+
+export const gameStateContext = createContext<{
+  gameState: gameStateType
+  setGameState: React.Dispatch<React.SetStateAction<gameStateType>>
+} | null>(null)
 
 function App() {
-  const [paragraph, setParagraph] = useState<string[]>([])
-  useEffect(() => {
-    setParagraph(shuffle(vocabularyList))
-  }, [])
-
+  const [gameState, setGameState] = useState<gameStateType>('not-started')
   return (
-    <div className="container">
-      <HiddenInput />
-      <TypeField paragraph={paragraph}>
-        <Caret />
-      </TypeField>
-      <ResetButton setParagraph={setParagraph}/>
-    </div>
+    <gameStateContext.Provider value={{ gameState, setGameState }}>
+      {gameState == 'end' ? <ResultPage /> : <HomePage />}
+    </gameStateContext.Provider>
   )
 }
 

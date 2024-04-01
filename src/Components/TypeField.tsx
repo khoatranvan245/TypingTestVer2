@@ -45,13 +45,9 @@ const TypeField = ({ children, paragraph }: TypeFieldType) => {
     typeRef.current!.style.top = 0 + 'px'
   }, [paragraph])
 
-  useEffect(() => {
-    document.querySelector(`.${styles.typeField}`)?.classList.remove(styles.blink)
-    document.querySelector(`.${styles.typeField}`)?.classList.add(styles.blink)
-  }, [paragraph])
 
   return (
-    <div className={styles.typeField}>
+    <div className={[styles.typeField, 'typeField'].join(' ')}>
       <p ref={typeRef}>
         {paragraph.map((word: string, index: number) => {
           return (

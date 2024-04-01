@@ -8,13 +8,12 @@ import TypeField from '../Components/TypeField'
 import { shuffle } from '../Utils/ShuffleArray'
 import { vocabularyList } from '../vocabularyList'
 import Timer from '../Components/Timer'
-import { gameStateContext } from '../App'
+import { useSelector } from 'react-redux'
+import { RootState } from '../State/Store'
 
 function HomePage() {
   const [paragraph, setParagraph] = useState<string[]>([])
-  const gameStateValue = useContext(gameStateContext)
-
-  const gameState = gameStateValue?.gameState
+  const gameState = useSelector((state: RootState) => state.gameState.value)
 
   useEffect(() => {
     setParagraph(shuffle(vocabularyList))

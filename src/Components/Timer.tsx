@@ -1,12 +1,12 @@
-import { useContext, useEffect, useRef, useState } from 'react'
-import { gameStateContext } from '../App'
+import { useEffect, useRef, useState } from 'react'
+import { useDispatch } from 'react-redux'
+import { setGameState } from '../State/Slices/gameState'
 
 const Timer = ({ time }: { time: number }) => {
   const [countdown, setCountDown] = useState(time)
   const timerId = useRef<number>()
 
-  const gameStateValue = useContext(gameStateContext)
-  const setGameState = gameStateValue!.setGameState
+  const dispatch = useDispatch()
 
   useEffect(() => {
     timerId.current = setInterval(() => {
@@ -21,7 +21,9 @@ const Timer = ({ time }: { time: number }) => {
   useEffect(() => {
     if (countdown < 0) {
       clearInterval(timerId.current)
-      setGameState('end')
+      dispatch(setGameState({
+        value: 'end'
+      }))
     }
   }, [countdown])
   return <h1>{countdown}</h1>

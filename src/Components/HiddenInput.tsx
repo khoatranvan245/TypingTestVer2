@@ -1,11 +1,10 @@
 import { useDispatch, useSelector } from 'react-redux'
 import { updateInput } from '../State/Slices/inputSlice'
-import { useContext, useEffect, useRef } from 'react'
+import { useEffect, useRef } from 'react'
 import { RootState } from '../State/Store'
 import { decreaseWordIndex, increaseWordIndex } from '../State/Slices/currentWordIndexSlice'
 import { removeWrongWordInput } from '../State/Slices/wrongWordInputSlice'
 import { setGameState } from '../State/Slices/gameState'
-import { gameStateContext } from '../App'
 
 const HiddenInput = () => {
   const input = useSelector((state: RootState) => state.input.value)
@@ -13,9 +12,6 @@ const HiddenInput = () => {
   const dispatch = useDispatch()
 
   const inputRef = useRef<HTMLInputElement>(null)
-
-  const gameStateValue = useContext(gameStateContext)
-  const setGameState = gameStateValue!.setGameState
 
   useEffect(() => {
     inputRef.current?.focus()
@@ -43,7 +39,9 @@ const HiddenInput = () => {
   }
 
   if (input !== '') {
-    setGameState('start')
+    dispatch(setGameState({
+      value: 'start'
+    }))
   }
 
   return (

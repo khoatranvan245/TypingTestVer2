@@ -5,7 +5,7 @@ type gameState = {
 }
 
 const initialState: gameState = {
-  value: 'start',
+  value: 'not-started',
 }
 
 const gameStateSlice = createSlice({
@@ -13,7 +13,7 @@ const gameStateSlice = createSlice({
     initialState: initialState,
     reducers: {
         setGameState: (state, action: PayloadAction<gameState>) => {
-            state = action.payload
+            state.value = action.payload.value
         }
     }
 })

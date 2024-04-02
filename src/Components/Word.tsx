@@ -5,6 +5,7 @@ import { RootState } from '../State/Store'
 import { useEffect, useState } from 'react'
 import { updateCaretPosition } from '../State/Slices/caretPositionSlice'
 import { addWrongWordInput, resetWrongWordInput } from '../State/Slices/wrongWordInputSlice'
+import { updateResult } from '../State/Slices/resultSlice'
 type WordType = {
   word: string
   wordIndex: number
@@ -20,6 +21,7 @@ const Word = ({ word, wordIndex, paragraph }: WordType) => {
 
   const dispatch = useDispatch()
 
+  //Update word display
   useEffect(() => {
     if (currentWordIndex == wordIndex) {
       let extraLetters = ''
@@ -32,6 +34,7 @@ const Word = ({ word, wordIndex, paragraph }: WordType) => {
     }
   }, [input, currentWordIndex])
 
+  //Change letter color and change caret position
   useEffect(() => {
     if (currentWordIndex === wordIndex) {
       setWordInput(input)
@@ -76,6 +79,7 @@ const Word = ({ word, wordIndex, paragraph }: WordType) => {
     }
   }, [input, currentWordIndex, currentWord])
 
+  //Check word after typing
   useEffect(() => {
     if (currentWordIndex == wordIndex) {
       document.querySelector(`.word${wordIndex}`)?.classList.remove(styles.wrongWord)
@@ -86,9 +90,20 @@ const Word = ({ word, wordIndex, paragraph }: WordType) => {
         document.querySelector(`.word${wordIndex}`)?.classList.add(styles.wrongWord)
         dispatch(addWrongWordInput(wordInput + ' '))
       } else dispatch(resetWrongWordInput())
+
+      dispatch(
+        updateResult({
+          index: wordIndex,
+          value: {
+            word: word,
+            typeWord: wordInput,
+          },
+        })
+      )
     }
   }, [currentWordIndex])
 
+  //Reset letter when change paragraph
   useEffect(() => {
     for (let i = 0; i < currentWord.length; i++) {
       document

@@ -1,0 +1,45 @@
+.mainResult {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    width: 350px;
+    margin: 0 auto;
+}
+
+
+.mainResult div,
+.subResult div {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.title {
+    color: var(--main-color);
+    font-size: 40px;
+}
+
+.result {
+    color: var(--text-color);
+    font-size: 70px;
+}
+
+.subResult {
+    margin-top: 50px;
+    display: flex;
+    gap: 50px;
+    margin-bottom: 50px;
+}
+
+.subResult div h1 {
+    line-height: 35px;
+}
+
+.subResult div h1:first-child {
+    font-size: 25px;
+}
+
+.subResult div h1:nth-child(2) {
+    font-size: 30px;
+    color: var(--text-color);
+}

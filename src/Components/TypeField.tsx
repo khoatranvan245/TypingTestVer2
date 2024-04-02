@@ -7,13 +7,13 @@ import { updateCaretPosition } from '../State/Slices/caretPositionSlice'
 
 type TypeFieldType = {
   children: ReactNode
-  paragraph: string[]
 }
 
-const TypeField = ({ children, paragraph }: TypeFieldType) => {
+const TypeField = ({ children }: TypeFieldType) => {
   const typeRef = useRef<HTMLDivElement>(null)
 
   const currentWordIndex = useSelector((state: RootState) => state.currentWordIndex.value)
+  const paragraph = useSelector((state: RootState) => state.paragraph.value)
   const dispatch = useDispatch()
 
   const caretHeight = 30

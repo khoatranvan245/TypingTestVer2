@@ -4,6 +4,8 @@ import wordIndexReducer from './Slices/currentWordIndexSlice'
 import caretPositionReducer from './Slices/caretPositionSlice'
 import wrongwordInputReducer from './Slices/wrongWordInputSlice'
 import gameStateReducer from './Slices/gameState'
+import resultReducer from './Slices/resultSlice'
+import paragraphReducer from './Slices/paragraphSlice'
 
 export const store = configureStore({
   reducer: {
@@ -12,6 +14,8 @@ export const store = configureStore({
     caretPosition: caretPositionReducer,
     wrongWordInput: wrongwordInputReducer,
     gameState: gameStateReducer,
+    result: resultReducer,
+    paragraph: paragraphReducer
   },
 })
 

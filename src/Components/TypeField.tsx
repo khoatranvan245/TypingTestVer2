@@ -4,6 +4,7 @@ import Word from './Word'
 import { useDispatch, useSelector } from 'react-redux'
 import { RootState } from '../State/Store'
 import { updateCaretPosition } from '../State/Slices/caretPositionSlice'
+import Blur from './Blur'
 
 type TypeFieldType = {
   children: ReactNode
@@ -14,6 +15,7 @@ const TypeField = ({ children }: TypeFieldType) => {
 
   const currentWordIndex = useSelector((state: RootState) => state.currentWordIndex.value)
   const paragraph = useSelector((state: RootState) => state.paragraph.value)
+  
   const dispatch = useDispatch()
 
   const caretHeight = 30
@@ -21,6 +23,17 @@ const TypeField = ({ children }: TypeFieldType) => {
     useSelector((state: RootState) => state.caretPosition.top) + caretHeight
 
   const [scrollTime, setScrollTime] = useState(1)
+
+  const [isFocus, setIsFocus] = useState(true)
+  useEffect(() => {
+    document.querySelector('input')?.addEventListener('blur', () => {
+      setIsFocus(false)
+    })
+
+    document.querySelector('input')?.addEventListener('focus', () => {
+      setIsFocus(true)
+    })
+  }, [])
 
   useEffect(() => {
     if (caretBottomPosition > 70 + scrollTime * 30) {
@@ -48,6 +61,7 @@ const TypeField = ({ children }: TypeFieldType) => {
 
   return (
     <div className={[styles.typeField, 'typeField'].join(' ')}>
+      {isFocus || <Blur/>}
       <p ref={typeRef}>
         {paragraph.map((word: string, index: number) => {
           return (

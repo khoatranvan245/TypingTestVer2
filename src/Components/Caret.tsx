@@ -4,8 +4,15 @@ import { RootState } from '../State/Store'
 import { useEffect, useRef } from 'react'
 const Caret = () => {
   const caretPosition = useSelector((state: RootState) => state.caretPosition)
+  const gameState = useSelector((state: RootState) => state.gameState.value)
 
   const caretRef = useRef<HTMLDivElement>(null)
+
+  useEffect(() => {
+    if (gameState == 'not-started')
+      document.querySelector(`.${styles.caret}`)?.classList.add(styles.animation)
+    else document.querySelector(`.${styles.caret}`)?.classList.remove(styles.animation)
+  }, [gameState])
 
   useEffect(() => {
     if (caretRef.current) {

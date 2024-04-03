@@ -9,6 +9,7 @@ import { setGameState } from '../State/Slices/gameState'
 const HiddenInput = () => {
   const input = useSelector((state: RootState) => state.input.value)
   const wrongWordInput = useSelector((state: RootState) => state.wrongWordInput.value)
+  const gameState = useSelector((state: RootState) => state.gameState.value)
   const dispatch = useDispatch()
 
   const inputRef = useRef<HTMLInputElement>(null)
@@ -16,6 +17,16 @@ const HiddenInput = () => {
   useEffect(() => {
     inputRef.current?.focus()
   }, [])
+
+  useEffect(() => {
+    if (input !== '' && gameState !== 'start') {
+      dispatch(
+        setGameState({
+          value: 'start',
+        })
+      )
+    }
+  }, [input])
 
   const handleInputChange = (inputValue: string) => {
     if (inputValue.includes(' ') && inputValue[0] !== '') {
@@ -36,12 +47,6 @@ const HiddenInput = () => {
         dispatch(removeWrongWordInput())
       }
     }
-  }
-
-  if (input !== '') {
-    dispatch(setGameState({
-      value: 'start'
-    }))
   }
 
   return (

@@ -7,7 +7,7 @@ type paragraphType = {
 }
 
 const initialValue: paragraphType = {
-    value: vocabularyList
+    value: shuffle(vocabularyList)
 }
 
 const paragraphSlice = createSlice({

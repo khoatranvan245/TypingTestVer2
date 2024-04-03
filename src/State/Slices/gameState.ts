@@ -1,7 +1,7 @@
 import { PayloadAction, createSlice} from "@reduxjs/toolkit"
 
 type gameState = {
-  value: 'not-started' | 'start' | 'end'
+  value: 'not-started' | 'start' | 'stop' | 'end'
 }
 
 const initialState: gameState = {

@@ -8,11 +8,13 @@ import ResetButton from './Components/ResetButton'
 function App() {
   const gameState = useSelector((state: RootState) => state.gameState.value)
 
-  return <div className="container">
-    {gameState == 'end' ? <ResultPage /> : <HomePage />}
-    <ResetButton/>
-    <div className='footer'></div>
-  </div>
+  return (
+    <div className="container">
+      {gameState == 'end' ? <ResultPage /> : <HomePage />}
+      <ResetButton />
+      <div className="footer"></div>
+    </div>
+  )
 }
 
 export default App

@@ -1,3 +1,5 @@
+import styles from './Timer.module.css'
+
 import { useEffect, useRef, useState } from 'react'
 import { useDispatch } from 'react-redux'
 import { setGameState } from '../State/Slices/gameState'
@@ -26,7 +28,7 @@ const Timer = ({ time }: { time: number }) => {
       }))
     }
   }, [countdown])
-  return <h1>{countdown}</h1>
+  return <div className={styles.timer}>{countdown}</div>
 }
 
 export default Timer

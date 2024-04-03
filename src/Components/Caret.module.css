@@ -8,7 +8,7 @@
 }
 
 .animation {
-    animation: caretAnimation 0.7s ease-in infinite alternate;
+    animation: caretAnimation 0.5s ease-in infinite alternate;
 }
 
 @keyframes caretAnimation {

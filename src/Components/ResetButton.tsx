@@ -8,17 +8,18 @@ import { setParagraph } from '../State/Slices/paragraphSlice'
 const ResetButton = () => {
   const dispatch = useDispatch()
   const resetPage = () => {
-    dispatch(updateInput(''))
-    dispatch(resetWrongWordInput())
-    dispatch(resetWordIndex())
-    dispatch(setParagraph())
     dispatch(
       setGameState({
         value: 'not-started',
       })
     )
-
+    dispatch(updateInput(''))
+    dispatch(setParagraph())
+    dispatch(resetWrongWordInput())
+    dispatch(resetWordIndex())
+    
     document.querySelector('input')?.focus()
+    
   }
   return (
     <button

@@ -7,6 +7,8 @@ import ResetButton from './Components/ResetButton'
 
 function App() {
   const gameState = useSelector((state: RootState) => state.gameState.value)
+  const result = useSelector((state: RootState) => state.result)
+  console.log(result)
 
   return (
     <div className="container">

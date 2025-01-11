@@ -52,11 +52,11 @@ const HiddenInput = () => {
   return (
     <>
       <input
-        style={{ opacity: '1', position: 'absolute', top: '0' }}
+        style={{ opacity: '0', position: 'absolute', top: '0' }}
         ref={inputRef}
         type="text"
         value={input}
-        onInput={(e) => handleInputChange(e.currentTarget.value)}
+        onChange={(e) => handleInputChange(e.currentTarget.value)}
         onKeyDown={(e) => handleBackSpace(e.key)}
       />
     </>

@@ -19,9 +19,12 @@ const resultSlice = createSlice({
         }
     }>) => {
         state[action.payload.index] = action.payload.value
+    },
+    resetResult: (state) => {
+      state = []
     }
   },
 })
 
 export default resultSlice.reducer
-export const {updateResult} = resultSlice.actions
+export const {updateResult, resetResult} = resultSlice.actions

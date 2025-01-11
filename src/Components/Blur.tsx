@@ -7,8 +7,8 @@ const Blur = () => {
       document.querySelector('input')?.focus()
     })
 
-    document.addEventListener('keydown', () => {
-      document.querySelector('input')?.focus()
+    document.addEventListener('keydown', (e) => {
+      if (e.key !== 'Enter') document.querySelector('input')?.focus()
     })
 
     return () => {

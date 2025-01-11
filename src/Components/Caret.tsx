@@ -25,7 +25,7 @@ const Caret = () => {
 
   return (
     <span
-      className={styles.caret}
+      className={[styles.caret, 'caret'].join(' ')}
       ref={caretRef}
     ></span>
   )

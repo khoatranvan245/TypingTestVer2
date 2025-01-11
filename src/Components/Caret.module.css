@@ -4,11 +4,11 @@
     height: 30px;
     border-left: 3px solid var(--wrong-color);
     position: absolute;
-    transition: left 0.1s linear;
+    transition: left 0.08s linear;
 }
 
 .animation {
-    animation: caretAnimation 0.5s ease-in infinite alternate;
+    animation: caretAnimation 0.5s linear infinite alternate;
 }
 
 @keyframes caretAnimation {

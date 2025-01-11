@@ -15,6 +15,8 @@ const TypeField = ({ children }: TypeFieldType) => {
 
   const currentWordIndex = useSelector((state: RootState) => state.currentWordIndex.value)
   const paragraph = useSelector((state: RootState) => state.paragraph.value)
+
+  const gameState = useSelector((state: RootState) => state.gameState.value)
   
   const dispatch = useDispatch()
 

@@ -16,8 +16,6 @@ const TypeField = ({ children }: TypeFieldType) => {
   const currentWordIndex = useSelector((state: RootState) => state.currentWordIndex.value)
   const paragraph = useSelector((state: RootState) => state.paragraph.value)
 
-  const gameState = useSelector((state: RootState) => state.gameState.value)
-  
   const dispatch = useDispatch()
 
   const caretHeight = 30
@@ -63,7 +61,7 @@ const TypeField = ({ children }: TypeFieldType) => {
 
   return (
     <div className={[styles.typeField, 'typeField'].join(' ')}>
-      {isFocus || <Blur/>}
+      {isFocus || <Blur />}
       <p ref={typeRef}>
         {paragraph.map((word: string, index: number) => {
           return (

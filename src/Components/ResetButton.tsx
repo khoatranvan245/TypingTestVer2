@@ -5,19 +5,18 @@ import { resetWrongWordInput } from '../State/Slices/wrongWordInputSlice'
 import { resetWordIndex } from '../State/Slices/currentWordIndexSlice'
 import { setGameState } from '../State/Slices/gameState'
 import { setParagraph } from '../State/Slices/paragraphSlice'
-import { resetResult } from '../State/Slices/resultSlice'
 const ResetButton = () => {
   const dispatch = useDispatch()
   const resetPage = () => {
     document.querySelector('input')?.focus()
-    
+
     dispatch(
       setGameState({
         value: 'not-started',
       })
     )
     dispatch(updateInput(''))
- 
+
     dispatch(resetWrongWordInput())
     dispatch(resetWordIndex())
 

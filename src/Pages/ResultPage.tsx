@@ -1,20 +1,11 @@
-import { useDispatch, useSelector } from 'react-redux'
+import { useSelector } from 'react-redux'
 import { RootState } from '../State/Store'
 
 import styles from './ResultPage.module.css'
-import { useEffect } from 'react'
-import { resetResult } from '../State/Slices/resultSlice'
 const ResultPage = () => {
   const result = useSelector((state: RootState) => state.result)
-  const dispatch = useDispatch()
 
   console.log(result)
-
-  useEffect(() => {
-    return () => {
-      dispatch(resetResult())
-    }
-  }, [])
 
   let correct: number = 0,
     incorrect: number = 0,
